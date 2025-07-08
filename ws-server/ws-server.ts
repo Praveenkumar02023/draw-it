@@ -1,7 +1,7 @@
 import { WebSocket, WebSocketServer } from "ws";
 import { parse } from "cookie";
 import jwt from "jsonwebtoken";
-import { prisma } from "./src/lib/prismaClient";
+import { prisma } from "../src/lib/prismaClient";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
