@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const parsed = signupValidator.safeParse(body);
 
     if (!parsed.success) {
-      return NextResponse.json({ message: "Invalid inputs :(" });
+      return NextResponse.json({ message: "Invalid inputs :(" },{status : 400});
     }
 
     const { email, password , name } = parsed.data;
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (user) {
-      return NextResponse.json({ message: "User already exist" });
+      return NextResponse.json({ message: "User already exist" },{status : 400});
     }
 
     const hashedPassword = await hashPassword(password);

@@ -26,6 +26,7 @@ const SignIn = () => {
             
             email : emailRef.current?.value,
             password : passwordRef.current?.value
+            
         });
 
         if(response.status == 200){

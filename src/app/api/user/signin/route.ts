@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const parsed = signinValidator.safeParse(body);
 
     if (!parsed.success) {
-      return NextResponse.json({ message: "Invalid inputs :(" });
+      return NextResponse.json({ message: "Invalid inputs :(" },{status : 400});
     }
 
     const { email, password } = parsed.data;
@@ -20,13 +20,13 @@ export async function POST(req: NextRequest) {
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-      return NextResponse.json({ message: "User not found" });
+      return NextResponse.json({ message: "User not found" },{status : 400});
     }
 
     const isPasswordCorrect = await matchPassword(password, user.password);
 
     if (!isPasswordCorrect) {
-      return NextResponse.json({ message: "incorrect password" });
+      return NextResponse.json({ message: "incorrect password" },{status : 400});
     }
 
     const token = await generateToken({ email: user.email, id: user.id });

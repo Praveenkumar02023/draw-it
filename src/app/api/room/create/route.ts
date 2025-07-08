@@ -8,6 +8,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req : NextRequest) {
 
     try {
+
+        console.log("we are in");
+        
         
         const decoded = await authMiddlware(req);
         
@@ -27,7 +30,8 @@ export async function POST(req : NextRequest) {
         }
 
         const slug = parsed.data.slug;
-
+        console.log(slug);
+        
         const exist = await prisma.room.findUnique({where : {slug}});
 
         if(exist){
