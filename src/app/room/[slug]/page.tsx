@@ -116,14 +116,9 @@ async function getRoomId(
 ) {
   try {
     const response = await axios.post(
-      `${URL}/api/v1/user/create-room`,
+      `/api/v1/user/create-room`,
       {
         slug: slug,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }
     );
 
