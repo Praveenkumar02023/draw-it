@@ -3,7 +3,7 @@ import { authMiddlware } from "@/lib/validateToken";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET(req : NextRequest , {params} : {params : {id : string}} ){
+export async function GET(req : NextRequest ){
 
     try {
         const decoded = await  authMiddlware(req);
