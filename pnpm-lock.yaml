@@ -50,6 +50,9 @@ importers:
       next:
         specifier: 15.3.5
         version: 15.3.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      prisma:
+        specifier: ^6.11.1
+        version: 6.11.1(typescript@5.8.3)
       react:
         specifier: ^19.0.0
         version: 19.1.0
@@ -81,9 +84,6 @@ importers:
       concurrently:
         specifier: ^9.2.0
         version: 9.2.0
-      prisma:
-        specifier: ^6.11.1
-        version: 6.11.1(typescript@5.8.3)
       tailwindcss:
         specifier: ^4
         version: 4.1.11
