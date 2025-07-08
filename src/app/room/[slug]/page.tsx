@@ -9,7 +9,7 @@ import Toolbar from "../../../components/Toolbar";
 import { useSocket } from "../../../hooks/useSocket";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import { URL } from "@/config";
+
 
 
 const ChatRoom = () => {
@@ -142,12 +142,7 @@ const getLastMessages = async (
 ) => {
   try {
     const response = await axios.get(
-      `${URL}/api/v1/user/chats/${roomIdRef.current}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      `/api/room/get-chat/?id=${roomIdRef.current}`,
     );
 
     if (!response) return;

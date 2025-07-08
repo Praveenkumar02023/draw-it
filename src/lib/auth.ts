@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
-import jwt, { JsonWebTokenError } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
-const JWT_SECRET = process.env.JWT_SECRET || "qwerrtS8786875677o00"
+const JWT_SECRET = process.env.JWT_SECRET!
 
 export async function hashPassword(password : string){
 
