@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { KeyRoundIcon, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { URL } from '@/config'
+
 
 
 
@@ -22,19 +22,14 @@ const SignIn = () => {
 
     const handleSignin = async() => {
 
-        const response = await axios.post(`${URL}/api/v1/user/signin`,{
+        const response = await axios.post(`/api/user/signin`,{
             
             email : emailRef.current?.value,
             password : passwordRef.current?.value
         });
 
         if(response.status == 200){
-
-            const token = response.data.token;
-            localStorage.setItem("jwt_token",token);
-
             router.push('/create-room');
-
         }else{
             alert(response.data.message);
         }
