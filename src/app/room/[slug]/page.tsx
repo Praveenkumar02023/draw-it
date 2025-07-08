@@ -14,7 +14,7 @@ import axios from "axios";
 
 const ChatRoom = () => {
   const slug = useParams().slug as string;
-  // console.log(JSON.parse(slug));
+    console.log(slug);
   
   const canvasRef = useRef<HTMLCanvasElement | null >(null);
   const ctxRef = useRef<CanvasRenderingContext2D>(null);
