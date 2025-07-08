@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export const createRoom = async(req : NextRequest) => {
+export async function POST(req : NextRequest) {
 
     try {
         
@@ -27,6 +27,15 @@ export const createRoom = async(req : NextRequest) => {
         }
 
         const slug = parsed.data.slug;
+
+        const exist = await prisma.room.findUnique({where : {slug}});
+
+        if(exist){
+
+            return NextResponse.json({message : "room exists",roomId : exist.id});
+            
+        }
+
         const adminId = decoded.id
         const newRoom = await prisma.room.create({
             data : {

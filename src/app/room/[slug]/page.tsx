@@ -14,6 +14,8 @@ import axios from "axios";
 
 const ChatRoom = () => {
   const slug = useParams().slug as string;
+  // console.log(JSON.parse(slug));
+  
   const canvasRef = useRef<HTMLCanvasElement | null >(null);
   const ctxRef = useRef<CanvasRenderingContext2D>(null);
   //array to hold the current canvas shapes.
@@ -54,15 +56,25 @@ const ChatRoom = () => {
     ctx.fillStyle = "lightslategray";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    const token = localStorage.getItem("jwt_token")!;
-
     const init = async () => {
-      await getRoomId(slug, token, roomIdRef);
+
+      console.log("hi there");
+      
+
+      await getRoomId(slug, roomIdRef);
+
       if (!roomIdRef.current) return;
-      await getLastMessages(token,roomIdRef,shapesRef);
+      console.log(roomIdRef.current);
+
+      await getLastMessages(roomIdRef,shapesRef);
+
+      console.log(shapesRef.current);
+
       drawAllShapes(canvas, shapesRef.current, ctx);
+
       if(!canvasRef) return
-      const ws = useSocket(token, roomIdRef.current,shapesRef,canvasRef,ctxRef);
+
+      const ws = useSocket(roomIdRef.current,shapesRef,canvasRef,ctxRef);
       
       if(ws){
         
@@ -111,36 +123,41 @@ export default ChatRoom;
 
 async function getRoomId(
   slug: string,
-  token: string,
   roomIdRef: React.RefObject<string | null>
 ) {
   try {
-    const response = await axios.post(
-      `/api/v1/user/create-room`,
-      {
-        slug: slug,
-      }
-    );
+    console.log("➡️ Sending request to create room with slug:", slug);
+    
+    const response = await axios.post(`/api/room/create`, { slug });
 
-    if (!response) return;
+    console.log("✅ Got response:", response.data);
+
+    if (!response.data || !response.data.roomId) {
+      console.error("❌ roomId missing in response");
+      return;
+    }
 
     roomIdRef.current = response.data.roomId;
+    console.log("🎯 roomIdRef.current set to:", roomIdRef.current);
+
   } catch (error) {
-    console.log(error);
+    console.error("❌ Error while creating room:", error);
   }
 }
 
+
 const getLastMessages = async (
-  token: string,
   roomIdRef: React.RefObject<string | null>,
   shapesRef: React.RefObject<displayShapeType[]>
 ) => {
   try {
+    
     const response = await axios.get(
       `/api/room/get-chat/?id=${roomIdRef.current}`,
     );
 
     if (!response) return;
+    console.log(response);
 
     const rawShapes = response.data.messages;
 

@@ -1,20 +1,19 @@
 import React from "react";
 import { displayShapeType } from "../canvasUtils/ToolTypes";
 import { drawAllShapes } from "../canvasUtils/DrawShape";
-import { wsURL } from "@/config";
+import { cookies } from "next/headers";
+
 
 
 
 export const useSocket = (
-    token : string,
     roomId : string,
     shapesRef : React.RefObject<displayShapeType[]>,
    canvasRef: React.RefObject<HTMLCanvasElement | null> ,
    ctxRef: React.RefObject<CanvasRenderingContext2D | null>
     ) => {
 
-  
-     const ws = new WebSocket(`${wsURL}?token=${token}`);
+     const ws = new WebSocket(`ws://localhost:8005`);
 
     if(!ws)return;
 
